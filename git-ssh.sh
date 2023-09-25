@@ -36,16 +36,70 @@ if [ "$KEYS" = 2 ]; then
       esac
   done
 fi
+if [ "$USB" = 1 ]
+PS3='How are you going to use the key? '
+  options=("No PIN or touch are required" "PIN but no touch required" "No PIN but touch is required" "A PIN and a touch are required (most secure)")
+  COLUMNS=12
+  select fav in "${options[@]}"; do
+      case $fav in
+          "No PIN or touch are required")
+              USB=1
+              break
+              ;;
+          "PIN but no touch required")
+              USB=2
+              break
+              ;;
+           "No PIN but touch is required")
+              USB=3
+              break
+              ;;
+           "A PIN and a touch are required (most secure)")
+              USB=4
+              break
+              ;;           
+          *) echo "invalid option $REPLY";;
+      esac
+  done
+fi
+if [ "$USB" = 1 ]
+PS3='How are you going to use the key? '
+  options=("No PIN or touch are required" "No PIN but touch is required")
+  COLUMNS=12
+  select fav in "${options[@]}"; do
+      case $fav in
+          "No PIN or touch are required")
+              USB=1
+              break
+              ;;
+           "No PIN but touch is required")
+              USB=3
+              break
+              ;;       
+          *) echo "invalid option $REPLY";;
+      esac
+  done
+fi
+
 if [ "$KEYS" = 1 ]; then
   sudo ssh-keygen -b 4096 -t rsa -f /root/.ssh/id_rsagithub -q -N ""
-  chmod 400 /root/.ssh/id_rsagithub
-  chmod 644 /root/.ssh/id_rsagithub.pub
 fi
-if [ "$KEYS" = 2 ] && [ "$USB" = 1 ]; then
+if [ "$USB" = 1 ]; then
+  
+fi
+if [ "$USB" = 2 ]; then
+  
+fi
+if [ "$USB" = 3 ]; then
+  
+fi
+if [ "$USB" = 4 ]; then
   
 fi
 
 
+chmod 400 /root/.ssh/id_rsagithub
+chmod 644 /root/.ssh/id_rsagithub.pub
 echo 'Host githubssh' >> /root/.ssh/github
 echo '        User git' >> /root/.ssh/github
 echo '        HostName github.com' >> /root/.ssh/github
