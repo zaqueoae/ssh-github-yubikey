@@ -7,6 +7,6 @@ This is a simple bash script that when you run it you will have all this in an i
 
 **Instructions**: Copy and paste these commands and Voila!
 ```console
-curl -o git-ssh.sh https://github.com/zaqueoae/yubikey-ssh/blob/main/git-ssh.sh
+curl -o git-ssh.sh https://raw.githubusercontent.com/zaqueoae/ssh-github-yubikey/main/git-ssh.sh
 bash ~/git-ssh.sh
 ```
