@@ -37,82 +37,82 @@ select fav in "${options[@]}"; do
     esac
 done
 if [ "$KEYS" = 2 ]; then
-  PS3='What type of USB key are you going to use?: '
-  options=("Yubikey" "Onlykey")
-  COLUMNS=12
-  select fav in "${options[@]}"; do
-      case $fav in
-          "Yubikey")
-              USB=1
-              break
-              ;;
-          "Onlykey")
-              USB=2
-              break
-              ;;
-          *) echo "invalid option $REPLY";;
-      esac
-  done
+    PS3='What type of USB key are you going to use?: '
+    options=("Yubikey" "Onlykey")
+    COLUMNS=12
+    select fav in "${options[@]}"; do
+        case $fav in
+            "Yubikey")
+                USB=1
+                break
+                ;;
+            "Onlykey")
+                USB=2
+                break
+                ;;
+            *) echo "invalid option $REPLY";;
+        esac
+    done
 fi
 if [ "$USB" = 1 ]; then
     PS3='How are you going to use the key? '
     options=("No PIN or touch are required" "PIN but no touch required" "No PIN but touch is required" "A PIN and a touch are required (most secure)")
     COLUMNS=12
     select fav in "${options[@]}"; do
-      case $fav in
-          "No PIN or touch are required")
-              USB=1
-              break
-              ;;
-          "PIN but no touch required")
-              USB=2
-              break
-              ;;
-           "No PIN but touch is required")
-              USB=3
-              break
-              ;;
-           "A PIN and a touch are required (most secure)")
-              USB=4
-              break
-              ;;           
-          *) echo "invalid option $REPLY";;
-      esac
+        case $fav in
+            "No PIN or touch are required")
+                USB=1
+                break
+                ;;
+            "PIN but no touch required")
+                USB=2
+                break
+                ;;
+            "No PIN but touch is required")
+                USB=3
+                break
+                ;;
+            "A PIN and a touch are required (most secure)")
+                USB=4
+                break
+                ;;           
+            *) echo "invalid option $REPLY";;
+        esac
     done
 fi
-if [ "$USB" = 2 ]
-PS3='How are you going to use the key? '
-  options=("No PIN or touch are required" "No PIN but touch is required")
-  COLUMNS=12
-  select fav in "${options[@]}"; do
-      case $fav in
-          "No PIN or touch are required")
-              USB=1
-              break
-              ;;
-           "No PIN but touch is required")
-              USB=3
-              break
-              ;;       
-          *) echo "invalid option $REPLY";;
-      esac
-  done
+if [ "$USB" = 2 ]; then
+    PS3='How are you going to use the key? '
+    options=("No PIN or touch are required" "No PIN but touch is required")
+    COLUMNS=12
+    select fav in "${options[@]}"; do
+        case $fav in
+            "No PIN or touch are required")
+                USB=1
+                break
+                ;;
+            "No PIN but touch is required")
+                USB=3
+                break
+                ;;       
+            *) echo "invalid option $REPLY";;
+        esac
+    done
 fi
 
 if [ "$KEYS" = 1 ]; then
-  sudo ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsagithub -q -N ""
+    sudo ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsagithub -q -N ""
 fi
 if [ "$USB" = 1 ]; then
-  ssh-keygen -t ed25519-sk -O resident -O no-touch-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
+    ssh-keygen -t ed25519-sk -O resident -O no-touch-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 if [ "$USB" = 2 ]; then
-  ssh-keygen -t ed25519-sk -O resident -O verify-required -O no-touch-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
+    sh-keygen -t ed25519-sk -O resident -O verify-required -O no-touch-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 if [ "$USB" = 3 ]; then
-  ssh-keygen -t ed25519-sk -O resident application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
+    ssh-keygen -t ed25519-sk -O resident application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 if [ "$USB" = 4 ]; then
-  ssh-keygen -t ed25519-sk -O resident -O verify-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
+    ssh-keygen -t ed25519-sk -O resident -O verify-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 
 chmod 400 ~/.ssh/id_rsagithub
