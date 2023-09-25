@@ -5,8 +5,7 @@ This is a simple bash script that when you run it you will have all this in an i
 - Finally git is configured
 
 
-**Instructions**
-Copy and paste these commands and Voila!
+**Instructions**: Copy and paste these commands and Voila!
 ```console
 curl -o https://github.com/zaqueoae/yubikey-ssh/blob/main/git-ssh.sh
 bash ~/git-ssh.sh
