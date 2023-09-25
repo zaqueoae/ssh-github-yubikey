@@ -62,7 +62,7 @@ PS3='How are you going to use the key? '
       esac
   done
 fi
-if [ "$USB" = 1 ]
+if [ "$USB" = 2 ]
 PS3='How are you going to use the key? '
   options=("No PIN or touch are required" "No PIN but touch is required")
   COLUMNS=12
@@ -81,34 +81,41 @@ PS3='How are you going to use the key? '
   done
 fi
 
+si .ssh/config no tiene como source ~/.ssh/
+
+
 if [ "$KEYS" = 1 ]; then
-  sudo ssh-keygen -b 4096 -t rsa -f /root/.ssh/id_rsagithub -q -N ""
+  sudo ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsagithub -q -N ""
 fi
 if [ "$USB" = 1 ]; then
-  
+  ssh-keygen -t ed25519-sk -O resident -O no-touch-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 if [ "$USB" = 2 ]; then
-  
+  ssh-keygen -t ed25519-sk -O resident -O verify-required -O no-touch-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 if [ "$USB" = 3 ]; then
-  
+  ssh-keygen -t ed25519-sk -O resident application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 if [ "$USB" = 4 ]; then
-  
+  ssh-keygen -t ed25519-sk -O resident -O verify-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 
 
-chmod 400 /root/.ssh/id_rsagithub
-chmod 644 /root/.ssh/id_rsagithub.pub
-echo 'Host githubssh' >> /root/.ssh/github
-echo '        User git' >> /root/.ssh/github
-echo '        HostName github.com' >> /root/.ssh/github
-echo '        IdentityFile /root/.ssh/id_rsagithub' >> /root/.ssh/github
+rm -f /root/.ssh/github
+echo 'Host githubssh' >> ~/.ssh/github
+echo '        User git' >> ~/.ssh/github
+echo '        HostName github.com' >> ~/.ssh/github
+echo '        IdentityFile  ~/.ssh/id_rsagithub' >> ~/.ssh/github
+
+chmod 400 ~/.ssh/id_rsagithub
+chmod 644 ~/.ssh/id_rsagithub.pub
+
+
 
 #Añado las llaves a ssh agent
 eval "$(ssh-agent)"
-ssh-add /root/.ssh/id_rsagithub
-pub=$(cat /root/.ssh/id_rsagithub.pub)
+ssh-add ~/.ssh/id_rsagithub
+pub=$(cat ~/.ssh/id_rsagithub.pub)
 echo ''
 echo ''
 echo ''
