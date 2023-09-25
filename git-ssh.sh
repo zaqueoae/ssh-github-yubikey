@@ -139,22 +139,22 @@ echo ''
 echo ''
 for (( ; ; ))
 do
-        githubuser=0
-        githubpass=0
-        read -r -p "Enter your github username: " githubuser
-        echo "Tu usuario de github es $githubuser"
-        echo 'Now I need the api-token'
+    githubuser=0
+    githubpass=0
+    read -r -p "Enter your github username: " githubuser
+    echo "Tu usuario de github es $githubuser"
+    echo 'Now I need the api-token'
+    echo "Here is a manual to create a api-token: https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
+    read -r -p "Write $githubuser's github api-token : " githubpass
+    curl -u "$githubuser:$githubpass" -X POST -d "{\"title\":\"`hostname$TODAY$SUFIJOGIT`\",\"key\":\"$pub\"}" https://api.github.com/user/keys
+    if github-authenticated githubssh; then
+        echo "Success! I have already connected to github via ssh."
+        break
+    else
+        echo "Something has gone wrong: the username or the api-token."
         echo "Here is a manual to create a api-token: https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
-        read -r -p "Write $githubuser's github api-token : " githubpass
-        curl -u "$githubuser:$githubpass" -X POST -d "{\"title\":\"`hostname$TODAY$SUFIJOGIT`\",\"key\":\"$pub\"}" https://api.github.com/user/keys
-        if github-authenticated githubssh; then
-            echo "Success! I have already connected to github via ssh."
-            break
-        else
-            echo "Something has gone wrong: the username or the api-token."
-            echo "Here is a manual to create a api-token: https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
-            read -n 1 -s -r -p "Press Enter to try to connect again"
-        fi
+        read -n 1 -s -r -p "Press Enter to try to connect again"
+    fi
 done
 read -r -p "Enter your github email: " githubemail
 git config --global user.email "$githubemail"
