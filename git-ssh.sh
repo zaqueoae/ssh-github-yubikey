@@ -54,7 +54,7 @@ if [ "$KEYS" = 2 ]; then
       esac
   done
 fi
-if [ "$USB" = 1 ]
+if [ "$USB" = 1 ]; then
 PS3='How are you going to use the key? '
   options=("No PIN or touch are required" "PIN but no touch required" "No PIN but touch is required" "A PIN and a touch are required (most secure)")
   COLUMNS=12
