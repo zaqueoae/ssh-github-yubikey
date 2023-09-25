@@ -55,10 +55,10 @@ if [ "$KEYS" = 2 ]; then
   done
 fi
 if [ "$USB" = 1 ]; then
-PS3='How are you going to use the key? '
-  options=("No PIN or touch are required" "PIN but no touch required" "No PIN but touch is required" "A PIN and a touch are required (most secure)")
-  COLUMNS=12
-  select fav in "${options[@]}"; do
+    PS3='How are you going to use the key? '
+    options=("No PIN or touch are required" "PIN but no touch required" "No PIN but touch is required" "A PIN and a touch are required (most secure)")
+    COLUMNS=12
+    select fav in "${options[@]}"; do
       case $fav in
           "No PIN or touch are required")
               USB=1
@@ -78,7 +78,7 @@ PS3='How are you going to use the key? '
               ;;           
           *) echo "invalid option $REPLY";;
       esac
-  done
+    done
 fi
 if [ "$USB" = 2 ]
 PS3='How are you going to use the key? '
