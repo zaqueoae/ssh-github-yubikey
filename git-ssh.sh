@@ -1,4 +1,22 @@
 #!/bin/bash
+
+TODAY=$(date +%F)
+SUFIJOGIT=$(date +"%T.%N" | md5sum | base64 | head -c 3)
+
+github-authenticated() {
+    # Attempt to ssh to GitHub
+    ssh -T "$1" &>/dev/null
+    RET=$?
+    if [ $RET == 1 ]; then
+    return 0
+    elif [ $RET == 255 ]; then
+    return 1
+    else
+    echo "unknown exit code in attempt to ssh into git@github.com"
+    fi
+    return 2
+}
+
 echo 'I am going to build the ssh connection with github.'
 echo 'Let me ask you some quick questions:'
 echo ''
@@ -81,9 +99,6 @@ PS3='How are you going to use the key? '
   done
 fi
 
-si .ssh/config no tiene como source ~/.ssh/
-
-
 if [ "$KEYS" = 1 ]; then
   sudo ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsagithub -q -N ""
 fi
@@ -100,17 +115,18 @@ if [ "$USB" = 4 ]; then
   ssh-keygen -t ed25519-sk -O resident -O verify-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 
+chmod 400 ~/.ssh/id_rsagithub
+chmod 644 ~/.ssh/id_rsagithub.pub
+
+if ! (grep -wq "source ~/.ssh/id_rsagithub" ~/.ssh/config); then 
+    echo 'source ~/.ssh/id_rsagithub' >> ~/.ssh/config
+fi
 
 rm -f /root/.ssh/github
 echo 'Host githubssh' >> ~/.ssh/github
 echo '        User git' >> ~/.ssh/github
 echo '        HostName github.com' >> ~/.ssh/github
 echo '        IdentityFile  ~/.ssh/id_rsagithub' >> ~/.ssh/github
-
-chmod 400 ~/.ssh/id_rsagithub
-chmod 644 ~/.ssh/id_rsagithub.pub
-
-
 
 #Añado las llaves a ssh agent
 eval "$(ssh-agent)"
@@ -125,17 +141,23 @@ for (( ; ; ))
 do
         githubuser=0
         githubpass=0
-        read -r -p "Escribe tu usuario de github: " githubuser
+        read -r -p "Enter your github username: " githubuser
         echo "Tu usuario de github es $githubuser"
-        echo ''
-        read -r -p "Escribe la contraseña de github de $githubuser: " githubpass
+        echo 'Now I need the api-token'
+        echo "Here is a manual to create a api-token: https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
+        read -r -p "Write $githubuser's github api-token : " githubpass
         curl -u "$githubuser:$githubpass" -X POST -d "{\"title\":\"`hostname$TODAY$SUFIJOGIT`\",\"key\":\"$pub\"}" https://api.github.com/user/keys
         if github-authenticated githubssh; then
-            echo "Hemos conectado"
+            echo "Success! I have already connected to github via ssh."
             break
         else
-            echo "Algo ha fallado: el nombre de usuario o el api token."
-            echo "Aquí tienes un manual para crear un api token: https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
-            read -n 1 -s -r -p "Pulsa Enter para volver a intentar conectar"
+            echo "Something has gone wrong: the username or the api-token."
+            echo "Here is a manual to create a api-token: https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
+            read -n 1 -s -r -p "Press Enter to try to connect again"
         fi
 done
+read -r -p "Enter your github email: " githubemail
+git config --global user.email "$githubemail"
+git config --global user.name "$githubuser"
+echo "You've made it! You can now interact withgithub with your ssh keys."
+echo "goodbye"
