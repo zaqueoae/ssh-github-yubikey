@@ -165,4 +165,5 @@ read -r -p "Enter your github email: " githubemail
 git config --global user.email "$githubemail"
 git config --global user.name "$githubuser"
 echo "You've made it! You can now interact withgithub with your ssh keys."
+echo "If you want to test your connection via ssh, run this command: ssh -T githubssh"
 echo "goodbye"
