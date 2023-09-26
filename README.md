@@ -4,7 +4,7 @@ This is a simple bash script that when you run it you will have all this in an i
 - The key will be added as an ssh key on your github
 - Finally git is configured
 
-When you're done running the script, you should be able to do things like git clone githubssh:[your-private-repository] and touch your yubikey/onlykey
+When you're done running the script, you should be able to do things like "git clone githubssh:[your-private-repository]" and touch your yubikey/onlykey
 
 
 
