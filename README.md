@@ -4,6 +4,9 @@ This is a simple bash script that when you run it you will have all this in an i
 - The key will be added as an ssh key on your github
 - Finally git is configured
 
+When you're done running the script, you should be able to do things like git clone githubssh:[your-private-repository] and touch your yubikey/onlykey
+
+
 
 **Instructions**: Copy and paste these commands and Voila!
 ```console
@@ -20,4 +23,3 @@ https://github.com/zaqueoae/ssh-github-yubikey/assets/20475209/7fc916fc-ab1f-429
 - The difference between choosing yubikey or onlykey is that onlykey has to be unlocked using the physical keyboard, so it does not allow resident keys that require entering the pin.
 - You can try ssh connection by running this command
   ```ssh -T githubssh```
-- When you're done running the script, you should be able to do things like git clone githubssh:[your-private-repository]
