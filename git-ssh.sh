@@ -23,7 +23,7 @@ echo 'I am going to build the ssh connection with github.'
 echo 'Let me ask you some quick questions:'
 echo ''
 PS3='Choose an option: '
-options=("I want to use a key on my computer" "I want to use Yubikey, Onlykey or similar")
+options=("I want to use a key on my computer" "I want to use a key with Yubikey, Onlykey or similar")
 COLUMNS=12
 select fav in "${options[@]}"; do
     case $fav in
@@ -31,7 +31,7 @@ select fav in "${options[@]}"; do
             KEYS=1
             break
             ;;
-        "I want to use Yubikey, Onlykey or similar")
+        "I want to use a key with Yubikey, Onlykey or similar")
             KEYS=2
             break
             ;;
