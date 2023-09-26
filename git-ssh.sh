@@ -121,16 +121,16 @@ if [ "$KEYS" = 1 ]; then
     ssh-keygen -b 4096 -t rsa -f "$PATHKEY" -q -N ""
 fi
 if [ "$USB" = 1 ]; then
-    ssh-keygen -t ed25519-sk -O resident -O no-touch-required -O application=ssh:id_rsagithub -f "$PATHKEY" -P ""
+    ssh-keygen -t ed25519-sk -O resident -O no-touch-required -O application=ssh:"id_rsagithub$SUFIX" -f "$PATHKEY" -P ""
 fi
 if [ "$USB" = 2 ]; then
-    ssh-keygen -t ed25519-sk -O resident -O verify-required -O no-touch-required -O application=ssh:id_rsagithub -f "$PATHKEY" -P ""
+    ssh-keygen -t ed25519-sk -O resident -O verify-required -O no-touch-required -O application=ssh:"id_rsagithub$SUFIX" -f "$PATHKEY" -P ""
 fi
 if [ "$USB" = 3 ]; then
-    ssh-keygen -t ed25519-sk -O resident -O application=ssh:id_rsagithub -f "$PATHKEY" -P ""
+    ssh-keygen -t ed25519-sk -O resident -O application=ssh:"id_rsagithub$SUFIX" -f "$PATHKEY" -P ""
 fi
 if [ "$USB" = 4 ]; then
-    ssh-keygen -t ed25519-sk -O resident -O verify-required -O application=ssh:id_rsagithub -f "$PATHKEY" -P ""
+    ssh-keygen -t ed25519-sk -O resident -O verify-required -O application=ssh:"id_rsagithub$SUFIX" -f "$PATHKEY" -P ""
 fi
 
 chmod 400 "$PATHKEY"
