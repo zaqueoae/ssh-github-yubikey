@@ -121,8 +121,8 @@ fi
 chmod 400 ~/.ssh/id_rsagithub
 chmod 644 ~/.ssh/id_rsagithub.pub
 
-if ! (grep -wq "source ~/.ssh/id_rsagithub" ~/.ssh/config); then 
-    echo 'source ~/.ssh/id_rsagithub' >> ~/.ssh/config
+if ! (grep -wq "Include github" ~/.ssh/config); then 
+    echo 'Include github' >> ~/.ssh/config
 fi
 
 rm -f ~/.ssh/github
