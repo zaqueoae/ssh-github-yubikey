@@ -101,7 +101,8 @@ if [ "$USB" = 2 ]; then
         esac
     done
 fi
-
+rm -f ~/.ssh/id_rsagithub
+rm -f ~/.ssh/id_rsagithub.pub
 if [ "$KEYS" = 1 ]; then
     sudo ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsagithub -q -N ""
 fi
