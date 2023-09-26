@@ -17,4 +17,7 @@ https://github.com/zaqueoae/ssh-github-yubikey/assets/20475209/7fc916fc-ab1f-429
 
 
 ## Explanation:
-The difference between choosing yubikey or onlykey is that onlykey has to be unlocked using the physical keyboard, so it does not allow resident keys that require entering the pin.
+- The difference between choosing yubikey or onlykey is that onlykey has to be unlocked using the physical keyboard, so it does not allow resident keys that require entering the pin.
+- You can try ssh connection by running this command
+  ```ssh -T githubssh```
+- When you're done running the script, you should be able to do things like git clone githubssh:[your-private-repository]
