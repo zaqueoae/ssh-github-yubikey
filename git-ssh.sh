@@ -28,7 +28,7 @@ github-authenticated() {
     fi
     return 2
 }
-
+echo ''
 echo 'I am going to build the ssh connection with github.'
 echo 'Let me ask you some quick questions:'
 echo ''
@@ -50,6 +50,7 @@ select fav in "${options[@]}"; do
     esac
 done
 if [ "$KEYS" = 2 ]; then
+    echo ''
     PS3='What type of USB key are you going to use?: '
     options=("Yubikey" "Onlykey")
     COLUMNS=12
@@ -68,6 +69,7 @@ if [ "$KEYS" = 2 ]; then
     done
 fi
 if [ "$USB" = 1 ]; then
+    echo ''
     PS3='How are you going to use the key? '
     options=("No PIN or touch are required" "PIN but no touch required" "No PIN but touch is required" "A PIN and a touch are required (most secure)")
     COLUMNS=12
@@ -94,6 +96,7 @@ if [ "$USB" = 1 ]; then
     done
 fi
 if [ "$USB" = 2 ]; then
+    echo ''
     PS3='How are you going to use the key? '
     options=("No PIN or touch are required" "No PIN but touch is required")
     COLUMNS=12
@@ -156,21 +159,29 @@ for (( ; ; ))
 do
     githubuser=0
     githubpass=0
+    echo ''
     read -r -p "Enter your github username: " githubuser
-    echo "Tu usuario de github es $githubuser"
+    echo "Your github user is $githubuser"
+    echo ''
+    echo ''
     echo 'Now I need the api-token'
     echo "Here is a manual to create a api-token: https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
+    echo ''
     read -r -p "Write $githubuser's github api-token : " githubpass
     curl -u "$githubuser:$githubpass" -X POST -d "{\"title\":\"`hostname$TODAY$SUFIJOGIT`\",\"key\":\"$pub\"}" https://api.github.com/user/keys
     if github-authenticated githubssh; then
+        echo ''
         echo "Success! I have already connected to github via ssh."
         break
     else
+        echo ''
         echo "Something has gone wrong: the username or the api-token."
         echo "Here is a manual to create a api-token: https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
+        echo ''
         read -n 1 -s -r -p "Press Enter to try to connect again"
     fi
 done
+echo ''
 read -r -p "Enter your github email: " githubemail
 git config --global user.email "$githubemail"
 git config --global user.name "$githubuser"
