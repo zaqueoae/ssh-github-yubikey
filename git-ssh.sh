@@ -1,8 +1,5 @@
 #!/bin/bash
 
-TODAY=$(date +%F)
-SUFIJOGIT=$(date +"%T.%N" | md5sum | base64 | head -c 3)
-
 cat << "EOF"
 
 
