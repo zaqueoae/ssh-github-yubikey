@@ -32,6 +32,7 @@ select fav in "${options[@]}"; do
             break
             ;;
         "I want to use a key with Yubikey, Onlykey or similar")
+            read -n 1 -s -r -p "Connect your Yubikey/Onlykey via USB and press a key."
             KEYS=2
             break
             ;;
