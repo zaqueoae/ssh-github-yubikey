@@ -111,12 +111,8 @@ if [ "$USB" = 2 ]; then
         esac
     done
 fi
-if ls ~/.ssh/id_rsagithub 1> /dev/null 2>&1; then
-        mv ~/.ssh/id_rsagithub ~/.ssh/id_rsagithub.back
-fi
-if ls ~/.ssh/id_rsagithub.pub 1> /dev/null 2>&1; then
-        mv ~/.ssh/id_rsagithub ~/.ssh/id_rsagithub.pub.back
-fi
+[ -f ~/.ssh/id_rsagithub ] && mv -f ~/.ssh/id_rsagithub ~/.ssh/id_rsagithub.back
+[ -f ~/.ssh/id_rsagithub.pub ] && mv -f ~/.ssh/id_rsagithub.pub ~/.ssh/id_rsagithub.pub.back
 if [ "$KEYS" = 1 ]; then
     ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsagithub -q -N ""
 fi
