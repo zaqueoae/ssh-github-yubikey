@@ -111,8 +111,12 @@ if [ "$USB" = 2 ]; then
         esac
     done
 fi
-rm -f ~/.ssh/id_rsagithub
-rm -f ~/.ssh/id_rsagithub.pub
+if ls ~/.ssh/id_rsagithub 1> /dev/null 2>&1; then
+        mv ~/.ssh/id_rsagithub ~/.ssh/id_rsagithub.back
+fi
+if ls ~/.ssh/id_rsagithub.pub 1> /dev/null 2>&1; then
+        mv ~/.ssh/id_rsagithub ~/.ssh/id_rsagithub.pub.back
+fi
 if [ "$KEYS" = 1 ]; then
     ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsagithub -q -N ""
 fi
@@ -143,7 +147,6 @@ echo '        HostName github.com' >> ~/.ssh/github
 echo '        IdentityFile  ~/.ssh/id_rsagithub' >> ~/.ssh/github
 chmod 644 .ssh/github
 
-#Añado las llaves a ssh agent
 eval "$(ssh-agent)"
 ssh-add ~/.ssh/id_rsagithub
 pub=$(cat ~/.ssh/id_rsagithub.pub)
