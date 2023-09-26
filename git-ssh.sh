@@ -111,7 +111,7 @@ if [ "$USB" = 2 ]; then
         esac
     done
 fi
-PATHKEY=~/.ssh/id_rsagithub
+
 if [ -f ~/.ssh/id_rsagithub ]; then
     SUFIX=$(date +"%T.%N" | md5sum | base64 | head -c 3)
 fi
