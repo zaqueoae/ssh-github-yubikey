@@ -120,7 +120,7 @@ if [ "$USB" = 1 ]; then
     ssh-keygen -t ed25519-sk -O resident -O no-touch-required -O application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 if [ "$USB" = 2 ]; then
-    sh-keygen -t ed25519-sk -O resident -O verify-required -O no-touch-required -O application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
+    ssh-keygen -t ed25519-sk -O resident -O verify-required -O no-touch-required -O application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 if [ "$USB" = 3 ]; then
     ssh-keygen -t ed25519-sk -O resident -O application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
