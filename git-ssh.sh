@@ -117,7 +117,7 @@ if [ -f ~/.ssh/id_rsagithub ]; then
 fi
 
 if [ "$KEYS" = 1 ]; then
-    ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsagithub"$SUFIX" -q -N ""
+    ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsagithub$SUFIX -q -N ""
 fi
 if [ "$USB" = 1 ]; then
     ssh-keygen -t ed25519-sk -O resident -O no-touch-required -O application=ssh:id_rsagithub$SUFIX -f ~/.ssh/id_rsagithub$SUFIX -P ""
