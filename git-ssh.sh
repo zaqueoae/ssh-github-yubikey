@@ -22,7 +22,7 @@ github-authenticated() {
 echo 'I am going to build the ssh connection with github.'
 echo 'Let me ask you some quick questions:'
 echo ''
-PS3='Do you want to use a key on your computer or are you going to use ybikey, onlykey or similar?: '
+PS3='Choose an option: '
 options=("I want to use a key on my computer" "I want to use Yubikey, Onlykey or similar")
 COLUMNS=12
 select fav in "${options[@]}"; do
