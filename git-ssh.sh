@@ -111,26 +111,30 @@ if [ "$USB" = 2 ]; then
         esac
     done
 fi
-[ -f ~/.ssh/id_rsagithub ] && mv -f ~/.ssh/id_rsagithub ~/.ssh/id_rsagithub.back
-[ -f ~/.ssh/id_rsagithub.pub ] && mv -f ~/.ssh/id_rsagithub.pub ~/.ssh/id_rsagithub.pub.back
-if [ "$KEYS" = 1 ]; then
-    ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsagithub -q -N ""
-fi
-if [ "$USB" = 1 ]; then
-    ssh-keygen -t ed25519-sk -O resident -O no-touch-required -O application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
-fi
-if [ "$USB" = 2 ]; then
-    ssh-keygen -t ed25519-sk -O resident -O verify-required -O no-touch-required -O application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
-fi
-if [ "$USB" = 3 ]; then
-    ssh-keygen -t ed25519-sk -O resident -O application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
-fi
-if [ "$USB" = 4 ]; then
-    ssh-keygen -t ed25519-sk -O resident -O verify-required -O application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
+PATHKEY=~/.ssh/id_rsagithub
+if [ -f ~/.ssh/id_rsagithub ]; then
+    SUFIX=$(date +"%T.%N" | md5sum | base64 | head -c 3)
+    PATHKEY="~/.ssh/id_rsagithub$SUFIX"
 fi
 
-chmod 400 ~/.ssh/id_rsagithub
-chmod 644 ~/.ssh/id_rsagithub.pub
+if [ "$KEYS" = 1 ]; then
+    ssh-keygen -b 4096 -t rsa -f "$PATHKEY" -q -N ""
+fi
+if [ "$USB" = 1 ]; then
+    ssh-keygen -t ed25519-sk -O resident -O no-touch-required -O application=ssh:id_rsagithub -f "$PATHKEY" -P ""
+fi
+if [ "$USB" = 2 ]; then
+    ssh-keygen -t ed25519-sk -O resident -O verify-required -O no-touch-required -O application=ssh:id_rsagithub -f "$PATHKEY" -P ""
+fi
+if [ "$USB" = 3 ]; then
+    ssh-keygen -t ed25519-sk -O resident -O application=ssh:id_rsagithub -f "$PATHKEY" -P ""
+fi
+if [ "$USB" = 4 ]; then
+    ssh-keygen -t ed25519-sk -O resident -O verify-required -O application=ssh:id_rsagithub -f "$PATHKEY" -P ""
+fi
+
+chmod 400 "$PATHKEY"
+chmod 644 "$PATHKEY".pub
 
 if ! (grep -wq "Include github" ~/.ssh/config); then
     sed  -i '1i Include github' ~/.ssh/config
@@ -140,12 +144,12 @@ rm -f ~/.ssh/github
 echo 'Host githubssh' >> ~/.ssh/github
 echo '        User git' >> ~/.ssh/github
 echo '        HostName github.com' >> ~/.ssh/github
-echo '        IdentityFile  ~/.ssh/id_rsagithub' >> ~/.ssh/github
+echo '        IdentityFile  "$PATHKEY"' >> ~/.ssh/github
 chmod 644 .ssh/github
 
 eval "$(ssh-agent)"
-ssh-add ~/.ssh/id_rsagithub
-pub=$(cat ~/.ssh/id_rsagithub.pub)
+ssh-add "$PATHKEY"
+pub=$(cat "$PATHKEY".pub)
 echo ''
 echo ''
 echo ''
