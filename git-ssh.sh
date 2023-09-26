@@ -167,7 +167,7 @@ do
     echo 'Now I need the api-token'
     echo "Here is a manual to create a api-token: https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
     echo ''
-    read -r -p "Write $githubuser's github api-token : " githubpass
+    read -r -p "Write $githubuser's github api-token : " -s githubpass
     curl -u "$githubuser:$githubpass" -X POST -d "{\"title\":\"`hostname$TODAY$SUFIJOGIT`\",\"key\":\"$pub\"}" https://api.github.com/user/keys
     if github-authenticated githubssh; then
         echo ''
