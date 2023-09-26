@@ -12,3 +12,7 @@ bash ~/git-ssh.sh
 ```
 
 
+https://github.com/zaqueoae/ssh-github-yubikey/assets/20475209/7fc916fc-ab1f-4292-98b4-566cb8463aa1
+
+
+
