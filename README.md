@@ -16,3 +16,5 @@ https://github.com/zaqueoae/ssh-github-yubikey/assets/20475209/7fc916fc-ab1f-429
 
 
 
+## Explanation:
+The difference between choosing yubikey or onlykey is that onlykey has to be unlocked using the physical keyboard, so it does not allow resident keys that require entering the pin.
