@@ -182,7 +182,17 @@ do
     fi
 done
 echo ''
-read -r -p "Enter your github email: " githubemail
+for (( ; ; ))
+do
+    read -r -p "Enter your github email: " githubemail
+    regex="^(([A-Za-z0-9]+((\.|\-|\_|\+)?[A-Za-z0-9]?)*[A-Za-z0-9]+)|[A-Za-z0-9]+)@(([A-Za-z0-9]+)+((\.|\-|\_)?([A-Za-z0-9]+)+)*)+\.([A-Za-z]{2,})+$"
+    if [[ "$githubemail" =~ ${regex} ]]; then
+        break
+    else
+        echo ''
+        echo "The email you have written is not valid. Write your email correctly:"
+    fi
+done
 git config --global user.email "$githubemail"
 git config --global user.name "$githubuser"
 echo "You've made it! You can now interact withgithub with your ssh keys."
