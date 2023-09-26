@@ -3,6 +3,8 @@
 TODAY=$(date +%F)
 SUFIJOGIT=$(date +"%T.%N" | md5sum | base64 | head -c 3)
 
+echo ''
+echo ''
 github-authenticated() {
     # Attempt to ssh to GitHub
     ssh -T "$1" &>/dev/null
