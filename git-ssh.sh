@@ -106,16 +106,16 @@ if [ "$KEYS" = 1 ]; then
     sudo ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsagithub -q -N ""
 fi
 if [ "$USB" = 1 ]; then
-    ssh-keygen -t ed25519-sk -O resident -O no-touch-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
+    ssh-keygen -t ed25519-sk -O resident -O no-touch-required -O application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 if [ "$USB" = 2 ]; then
-    sh-keygen -t ed25519-sk -O resident -O verify-required -O no-touch-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
+    sh-keygen -t ed25519-sk -O resident -O verify-required -O no-touch-required -O application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 if [ "$USB" = 3 ]; then
-    ssh-keygen -t ed25519-sk -O resident application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
+    ssh-keygen -t ed25519-sk -O resident -O application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 if [ "$USB" = 4 ]; then
-    ssh-keygen -t ed25519-sk -O resident -O verify-required application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
+    ssh-keygen -t ed25519-sk -O resident -O verify-required -O application=ssh:id_rsagithub -f ~/.ssh/id_rsagithub -P ""
 fi
 
 chmod 400 ~/.ssh/id_rsagithub
@@ -125,7 +125,7 @@ if ! (grep -wq "source ~/.ssh/id_rsagithub" ~/.ssh/config); then
     echo 'source ~/.ssh/id_rsagithub' >> ~/.ssh/config
 fi
 
-rm -f /root/.ssh/github
+rm -f ~/.ssh/github
 echo 'Host githubssh' >> ~/.ssh/github
 echo '        User git' >> ~/.ssh/github
 echo '        HostName github.com' >> ~/.ssh/github
